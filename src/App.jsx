@@ -43,6 +43,7 @@ function App() {
   const sumTime = records.reduce((total, rec) => total + rec.time, 0);
   return (
     <>
+     <h1>自動デプロイできてるか確認</h1>
       <div className="title">
         <p>学習内容</p>
         <input
