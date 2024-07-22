@@ -1,13 +1,30 @@
-name: Hello World  # このworkflowの名前
+name: Deploy to Firebase
 
-on: # onで実行タイミングを設定
-  push: # pushイベントで実行
+on:
+  push:
     branches:
-      - main  # mainブランチへのプッシュで実行（他のブランチに変更可能）
-  workflow_dispatch: # 手動で実行するAction
+      - main
 
-jobs: # jobsで実行する内容を書く
-  say_hello: # 実行する内容(job)の名前
-    runs-on: ubuntu-latest # 実行するOS
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
     steps:
-      - run: echo "Hello World!" # 実行するコマンド
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '21.7.3'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Deploy to Firebase
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: firebase deploy --only hosting
