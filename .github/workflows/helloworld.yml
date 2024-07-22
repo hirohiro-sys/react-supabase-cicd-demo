@@ -1,6 +1,9 @@
 name: Hello World  # このworkflowの名前
 
 on: # onで実行タイミングを設定
+  push: # pushイベントで実行
+    branches:
+      - main  # mainブランチへのプッシュで実行（他のブランチに変更可能）
   workflow_dispatch: # 手動で実行するAction
 
 jobs: # jobsで実行する内容を書く
