@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllRecords } from "../utils/supabasefunctions";
+import { addRecord, deleteRecord, getAllRecords } from "../utils/supabasefunctions";
 import "./App.css";
 
 function App() {
@@ -19,18 +19,27 @@ function App() {
     getRecords();
   }, []);
 
-  const onClickAddRecord = () => {
+  const onClickAddRecord = async (e) => {
+    e.preventDefault();
     if ((title === "") | (time === "")) {
       setError("入力されていない項目があります");
       return;
     } else {
-      const newRecords = [...records, { title, time: parseInt(time) || 0 }];
-      setRecords(newRecords);
+      await addRecord(title, time);
+      let  newRecords = await getAllRecords();
+      setRecords(newRecords)
       setTitle("");
       setTime("0");
       setError("");
     }
   };
+
+  const onClickDeleteRecord = async (id) => {
+    await deleteRecord(id)
+    let  newRecords = await getAllRecords();
+    setRecords(newRecords)
+  }
+
   const sumTime = records.reduce((total, rec) => total + rec.time, 0);
   return (
     <>
@@ -58,12 +67,13 @@ function App() {
       <div>
         <h1>学習記録一覧</h1>
         {isLoading ? (
-          <p>データを取得しています。</p>
+          <p>データを取得中。。。。。</p>
         ) : (
           <ul>
-            {records.map((record, index) => (
-              <li key={index}>
+            {records.map((record, index,id) => (
+              <li key={index} className="list-style">
                 <p>{record.title}</p>: {record.time}時間
+                <button onClick={()=>onClickDeleteRecord(record.id)}>削除</button>
               </li>
             ))}
           </ul>
