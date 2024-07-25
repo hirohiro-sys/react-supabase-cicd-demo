@@ -20,14 +20,15 @@ jobs:
       - name: Install dependencies
         run: npm install
       
-      - name: Run unit tests
-        run: npm test          # テストを実行するスクリプト
 
       - name: Run build
         run: npm run build
         env:
           VITE_SUPABASE_URL: ${{secrets.VITE_SUPABASE_URL}}
           VITE_SUPABASE_ANON_KEY: ${{secrets.VITE_SUPABASE_ANON_KEY}}
+          
+       - name: Run unit tests
+        run: npm test          # テストを実行するスクリプト
 
       - name: Install firebase-tools
         run: npm install --save-dev firebase-tools
