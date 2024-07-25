@@ -43,7 +43,7 @@ function App() {
   const sumTime = records.reduce((total, rec) => total + rec.time, 0);
   return (
     <>
-     <h1>自動デプロイチェック</h1>
+     <title data-testid="title">Hello Jest</title>
       <div className="title">
         <p>学習内容</p>
         <input
