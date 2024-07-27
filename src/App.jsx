@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { addRecord, deleteRecord, getAllRecords } from "../utils/supabasefunctions";
+import {
+  addRecord,
+  deleteRecord,
+  getAllRecords,
+} from "../utils/supabasefunctions";
 import "./App.css";
 
 function App() {
@@ -26,8 +30,8 @@ function App() {
       return;
     } else {
       await addRecord(title, time);
-      let  newRecords = await getAllRecords();
-      setRecords(newRecords)
+      let newRecords = await getAllRecords();
+      setRecords(newRecords);
       setTitle("");
       setTime("0");
       setError("");
@@ -35,21 +39,22 @@ function App() {
   };
 
   const onClickDeleteRecord = async (id) => {
-    await deleteRecord(id)
-    let  newRecords = await getAllRecords();
-    setRecords(newRecords)
-  }
+    await deleteRecord(id);
+    let newRecords = await getAllRecords();
+    setRecords(newRecords);
+  };
 
   const sumTime = records.reduce((total, rec) => total + rec.time, 0);
   return (
     <>
-     <title data-testid="title">Hello Jest</title>
+      <title data-testid="test-title">Hello Jest</title>
       <div className="title">
         <p>学習内容</p>
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          placeholder="学習内容を入力"
         />
       </div>
       <div className="time">
@@ -58,6 +63,7 @@ function App() {
           type="number"
           value={time}
           onChange={(e) => setTime(e.target.value)}
+          placeholder="時間を入力"
         />
         <p>時間</p>
       </div>
@@ -65,19 +71,23 @@ function App() {
       <p>入力されている学習内容: {title}</p>
       <p>入力されている学習時間: {time}時間</p>
 
-      <div>
         <h1>学習記録一覧</h1>
+      <div>
         {isLoading ? (
           <p>データを取得中。。。。。</p>
-        ) : (
-          <ul>
-            {records.map((record, index,id) => (
+          ) : (
+
+          <ul data-testid="record-list">
+            {records.map((record, index) => (
               <li key={index} className="list-style">
                 <p>{record.title}</p>: {record.time}時間
-                <button onClick={()=>onClickDeleteRecord(record.id)}>削除</button>
+                <button onClick={() => onClickDeleteRecord(record.id)}>
+                  削除
+                </button>
               </li>
             ))}
           </ul>
+          
         )}
         <button onClick={onClickAddRecord}>登録</button>
         <p>{error}</p>
