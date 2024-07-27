@@ -44,4 +44,19 @@ describe("テストの練習", () => {
     expect(records.length).toBe(3);
   });
 
+    
+  test("削除ボタンを押すと学習記録が削除される", async () => {
+    render(<App />);
+    
+    let records = screen.getAllByTestId("record-list")[0].querySelectorAll("li");
+  
+    const deleteButton = screen.getAllByText("削除")[0];
+    fireEvent.click(deleteButton);
+  
+    await waitFor(() => {
+      records = screen.getAllByTestId("record-list")[0].querySelectorAll("li");
+      expect(records.length).toBe(2);
+    });
+  });
+
 });
