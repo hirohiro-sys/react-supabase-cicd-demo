@@ -20,10 +20,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests and build
+      - name: Run build and tests
         run: |
-          npm run test
           npm run build
+          npm run test
         env:
           VITE_SUPABASE_URL: ${{secrets.VITE_SUPABASE_URL}}
           VITE_SUPABASE_ANON_KEY: ${{secrets.VITE_SUPABASE_ANON_KEY}}
