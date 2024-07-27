@@ -81,7 +81,7 @@ function App() {
             {records.map((record, index) => (
               <li key={index} className="list-style">
                 <p>{record.title}</p>: {record.time}時間
-                <button onClick={() => onClickDeleteRecord(record.id)} data-testid="delete-button">
+                <button onClick={() => onClickDeleteRecord(record.id)} >
                   削除
                 </button>
               </li>
