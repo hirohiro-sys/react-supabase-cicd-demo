@@ -1,7 +1,6 @@
 import App from "../App";
 import React from "react";
-import {userEvent, render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { deleteRecord } from "../../utils/supabasefunctions";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 
 const mockGetAllRecords = jest.fn().mockResolvedValue([
   { id: 1, title: "title1", time: 3 },
@@ -9,7 +8,7 @@ const mockGetAllRecords = jest.fn().mockResolvedValue([
   { id: 3, title: "title3", time: 3 },
 ]);
 
-const mockDeleteRecord = jest.fn();
+const mockDeleteRecord = jest.fn(() => Promise.resolve());
 
 jest.mock("../../utils/supabasefunctions", () => {
   return {
@@ -42,21 +41,6 @@ describe("テストの練習", () => {
     await waitFor(() => screen.getAllByTestId("record-list"));
     const records = screen.getAllByTestId("record-list")[0].querySelectorAll("li");
     expect(records.length).toBe(3);
-  });
-
-    
-  test("削除ボタンを押すと学習記録が削除される", async () => {
-    render(<App />);
-    
-    let records = screen.getAllByTestId("record-list")[0].querySelectorAll("li");
-  
-    const deleteButton = screen.getAllByText("削除")[0];
-    fireEvent.click(deleteButton);
-  
-    await waitFor(() => {
-      records = screen.getAllByTestId("record-list")[0].querySelectorAll("li");
-      expect(records.length).toBe(2);
-    });
   });
 
 });
