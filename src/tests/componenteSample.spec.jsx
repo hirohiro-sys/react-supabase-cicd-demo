@@ -60,6 +60,4 @@ describe("テストの練習", () => {
       expect(recordsAfter).toBe(recordsBefore + 1);
     });
   });
-
-
 });
