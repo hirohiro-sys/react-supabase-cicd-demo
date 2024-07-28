@@ -55,6 +55,7 @@ function App() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="学習内容を入力"
+          data-testid="study-title"
         />
       </div>
       <div className="time">
@@ -64,6 +65,7 @@ function App() {
           value={time}
           onChange={(e) => setTime(e.target.value)}
           placeholder="時間を入力"
+          data-testid="study-time"
         />
         <p>時間</p>
       </div>
@@ -81,7 +83,7 @@ function App() {
             {records.map((record, index) => (
               <li key={index} className="list-style">
                 <p>{record.title}</p>: {record.time}時間
-                <button onClick={() => onClickDeleteRecord(record.id)} >
+                <button onClick={() => onClickDeleteRecord(record.id)} data-testid="delete-button">
                   削除
                 </button>
               </li>
@@ -89,7 +91,7 @@ function App() {
           </ul>
           
         )}
-        <button onClick={onClickAddRecord}>登録</button>
+        <button onClick={onClickAddRecord} data-testid="register-button">登録</button>
         <p>{error}</p>
         <p>合計時間: {sumTime}/1000(h)</p>
       </div>

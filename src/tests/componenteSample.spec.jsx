@@ -12,10 +12,11 @@ describe("テストの練習", () => {
   
   test("入力されていない項目がある場合にエラーが表示されるか", async () => {
     render(<App />);
-    const addButton = screen.getByText("登録");
+    const addButton = screen.getByTestId("register-button");
     fireEvent.click(addButton);
     await waitFor(() => {
       expect(
+        // ここはstate管理のテキスト
         screen.getByText("入力されていない項目があります")
       ).toBeInTheDocument();
     });
@@ -29,7 +30,7 @@ describe("テストの練習", () => {
     let records = screen.getAllByTestId("record-list")[0].querySelectorAll("li");
     const initialRecordCount = records.length;
 
-    const deleteButtons = screen.getAllByText("削除");
+    const deleteButtons = screen.getAllByTestId("delete-button");
     fireEvent.click(deleteButtons[0]);
 
   
@@ -44,9 +45,9 @@ describe("テストの練習", () => {
     render(<App />);
     await waitFor(() => screen.getAllByTestId("record-list"));
 
-    const titleInput = screen.getByPlaceholderText("学習内容を入力");
-    const timeInput = screen.getByPlaceholderText("時間を入力");
-    const addButton = screen.getByText("登録");
+    const titleInput = screen.getByTestId("study-title");
+    const timeInput = screen.getByTestId("study-time");
+    const addButton = screen.getByTestId("register-button");
   
     const recordsBefore = screen.getAllByTestId("record-list")[0].querySelectorAll("li").length;
   
